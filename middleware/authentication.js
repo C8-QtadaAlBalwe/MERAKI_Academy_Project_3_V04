@@ -19,6 +19,7 @@ const authentication = (req, res, next) => {
         } else{
           req.token = results;
           next();
+          console.log("req.token" ,results)
         }
         });
   }catch(err){

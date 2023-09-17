@@ -63,7 +63,7 @@ const login = (req, res) => {
           });
         }
         const payload = {
-          userId: results.rows[0].id,
+          author_id: results.rows[0].id,
           country: results.rows[0].country,
           role: results.rows[0].role_id,
         };
@@ -77,6 +77,7 @@ const login = (req, res) => {
           message: `Valid login credentials`,
           token: token,
         });
+        console.log(token.payload)
       } catch (error) {
         throw new Error(error.message);
       }

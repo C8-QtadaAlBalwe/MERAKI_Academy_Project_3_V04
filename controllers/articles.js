@@ -1,7 +1,22 @@
-
+const { pool } = require("../models/db");
 // This function creates new article
 const createNewArticle = (req, res) => {
-  //TODO: write your code here
+  const{title,description}=req.body;
+  const author_id =req.token.author_id
+  const placeholder=[title,description,author_id];
+  pool.query(`INSERT INTO articles (title,description,author_id) VALUES ($1,$2,$3) RETURNING *;`, placeholder).then((resutls)=>{
+    res.status(201).json({
+      success:true,
+      massege:"Article created successfully",
+      result:resutls.rows
+    })
+  }).catch((err)=>{
+    res.status(500).json({
+      success:false,
+      massege:"Server error",
+      err:err.massege
+    })
+  })
 };
 
 // This function returns the articles
@@ -35,5 +50,5 @@ const deleteArticlesByAuthor = (req, res) => {
 };
 
 module.exports = {
-
+  createNewArticle
 };
