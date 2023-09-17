@@ -63,10 +63,11 @@ const login = (req, res) => {
           });
         }
         const payload = {
-          userId: results.rows[0]._id,
+          userId: results.rows[0].id,
           country: results.rows[0].country,
           role: results.rows[0].role_id,
         };
+      
         const options = {
           expiresIn: "60m",
         };
