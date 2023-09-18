@@ -114,8 +114,26 @@ const updateArticleById = (req, res) => {
 
 // This function deletes a specific article by its id
 const deleteArticleById = (req, res) => {
-  //TODO: write your code here
-};
+  const id =req.params.id;
+ 
+  const placeholder=[id];
+ 
+  pool.query(`DELETE FROM articles WHERE id= $1;` ,placeholder).then((results)=>{
+   console.log(results)
+   res.status(200).json({
+     success: true,
+     message: `Article with id: ${id} deleted successfully`,
+   })
+  }).catch((err)=>{
+   res.status(500).json({
+     success: false,
+     message: "Server error",
+     err: err.message,
+   })
+  }) 
+ 
+ };
+
 
 // This function deletes all the articles for a specific author
 const deleteArticlesByAuthor = (req, res) => {
@@ -123,5 +141,5 @@ const deleteArticlesByAuthor = (req, res) => {
 };
 
 module.exports = {
-  createNewArticle,getAllArticles,getArticlesByAuthor,getArticleById,updateArticleById
+  createNewArticle,getAllArticles,getArticlesByAuthor,getArticleById,updateArticleById,deleteArticleById
 };
