@@ -2,8 +2,8 @@ const { pool } = require("../models/db");
 // This function creates a new comment for a specific article
 const createNewComment = (req, res) => {
 
-  const {id} =req.params.id;
-  const {author_id} = req.token.author_id;
+  const id =req.params.id;
+  const author_id = req.token.author_id;
   const comment = req.body;
   const placeholder = [ author_id ,id, comment];
 
@@ -28,6 +28,28 @@ const createNewComment = (req, res) => {
 };
 // This function returns the comments
 const getCommentsByArticle = (req, res) => {
-  //TODO: write your code here
+  const id =req.params.id;
+  const placeholder=[id]
+  pool.query(`SELECT Comment FROM comments WHERE article_id = $1`)
+  .then((results) => {
+    if(!results.rows){
+     res.status(404).json({
+      success:false,
+      massage:"no comments on this articles"
+     })
+    }
+    res.status(201).json({
+      success: true,
+      message: `All comments for article: ${article_id}`,
+      results: results.rows,
+    });
+  })
+  .catch((err) => {
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      err: err.message,
+    });
+  });
 };
-module.exports = {createNewComment};
+module.exports = {createNewComment,getCommentsByArticle};
