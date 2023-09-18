@@ -137,9 +137,11 @@ const deleteArticleById = (req, res) => {
 
 // This function deletes all the articles for a specific author
 const deleteArticlesByAuthor = (req, res) => {
-  //TODO: write your code here
+  const author_id =req.params.author_id;
+  const author=req.params.author
+  // how ?? 
 };
 
 module.exports = {
-  createNewArticle,getAllArticles,getArticlesByAuthor,getArticleById,updateArticleById,deleteArticleById
+  createNewArticle,getAllArticles,getArticlesByAuthor,getArticleById,updateArticleById,deleteArticleById,deleteArticlesByAuthor
 };
