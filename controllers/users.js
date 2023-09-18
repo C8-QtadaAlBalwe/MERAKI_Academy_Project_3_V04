@@ -67,7 +67,7 @@ const login = (req, res) => {
           country: results.rows[0].country,
           role: results.rows[0].role_id,
         };
-      
+        console.log(payload)
         const options = {
           expiresIn: "60m",
         };
