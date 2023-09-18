@@ -69,7 +69,22 @@ const getArticlesByAuthor = (req, res) => {
 
 // This function returns article by its id
 const getArticleById = (req, res) => {
-  //TODO: write your code here
+  const id =req.params.id;
+  const placeholder=[id]
+  pool.query(`SELECT title FROM articles WHERE id= $1`,placeholder).then((results)=>{
+    res.status(200).json({
+      success:true,
+      massege: `The article with id: ${id}`,
+      article:results.rows
+    })
+  }).catch((err)=>{
+    res.status(500).json({ 
+      success: false,
+      message: "Server error",
+      err: err.message
+    })
+   
+  })
 };
 
 // This function updates article by its id
@@ -88,5 +103,5 @@ const deleteArticlesByAuthor = (req, res) => {
 };
 
 module.exports = {
-  createNewArticle,getAllArticles,getArticlesByAuthor
+  createNewArticle,getAllArticles,getArticlesByAuthor,getArticleById
 };
