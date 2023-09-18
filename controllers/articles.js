@@ -44,7 +44,27 @@ const getAllArticles = (req, res) => {
 
 //This function returns articles by author
 const getArticlesByAuthor = (req, res) => {
-  //TODO: write your code here
+  const author_id = req.token.author_id;
+  placeholder=[author_id]
+  pool.query(`SELECT title FROM articles FULL OUTER JOIN users
+  ON articles.author_id=users.id ;`).then((resutls)=>{
+    if(!resutls.rows){
+      res.status(404).json({
+        success:false,
+        massege:`The author: ${author_id} has no articles`})}
+        else{
+   res.status(200).json({
+    success:true,
+    message: `All articles for the author: ${author_id}`,
+    articles: resutls.rows
+   })}
+  }).catch((err)=>{
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      err: err.message
+      })
+  })
 };
 
 // This function returns article by its id
@@ -68,5 +88,5 @@ const deleteArticlesByAuthor = (req, res) => {
 };
 
 module.exports = {
-  createNewArticle,getAllArticles
+  createNewArticle,getAllArticles,getArticlesByAuthor
 };
