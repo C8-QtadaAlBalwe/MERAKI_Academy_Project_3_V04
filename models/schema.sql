@@ -53,3 +53,25 @@
 --     is_deleted SMALLINT DEFAULT 0,
 --     PRIMARY KEY (id)
 -- );
+
+-------------------------------------------------
+-- permissions  TABLE.
+
+--  CREATE TABLE permissions (
+--     id SERIAL NOT NULL,
+--     permission VARCHAR(255) NOT NULL,
+--     PRIMARY KEY (id)
+-- );
+
+
+-------------------------------------------------
+-- role_permission  TABLE.
+
+-- CREATE TABLE role_permission (
+--     id SERIAL NOT NULL,
+--     role_id INT,
+--     permission_id INT,
+--     FOREIGN KEY (role_id ) REFERENCES roles (id),
+--     FOREIGN KEY (permission_id) REFERENCES permissions (id),
+--     PRIMARY KEY (id)
+-- );
