@@ -89,7 +89,27 @@ const getArticleById = (req, res) => {
 
 // This function updates article by its id
 const updateArticleById = (req, res) => {
-  //TODO: write your code here
+ const id =req.params.id;
+ const description= req.body.description
+ const title= req.body.title
+ const placeholder=[id,title,description];
+
+ pool.query(`UPDATE articles
+ SET title = $2, description = $3 WHERE id= $1 RETURNING title,description;` ,placeholder).then((results)=>{
+  console.log(results)
+  res.status(200).json({
+    success: true,
+    message: `Article with id: ${id} updated successfully`,
+    article: results.rows
+  })
+ }).catch((err)=>{
+  res.status(500).json({
+    success: false,
+    message: "Server error",
+    err: err.message,
+  })
+ }) 
+
 };
 
 // This function deletes a specific article by its id
@@ -103,5 +123,5 @@ const deleteArticlesByAuthor = (req, res) => {
 };
 
 module.exports = {
-  createNewArticle,getAllArticles,getArticlesByAuthor,getArticleById
+  createNewArticle,getAllArticles,getArticlesByAuthor,getArticleById,updateArticleById
 };
